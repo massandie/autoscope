@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Autoscope — Télématique automobile pour les marchés émergents</title>
+<meta name="description" content="Autoscope combine un dongle OBD-II et les capteurs du smartphone pour la maintenance prédictive, l'analyse de conduite et le scoring assurance." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%233b82f6'/%3E%3Cpath d='M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='6.5' cy='16.5' r='2.5' stroke='white' stroke-width='2' fill='none'/%3E%3Ccircle cx='16.5' cy='16.5' r='2.5' stroke='white' stroke-width='2' fill='none'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="grid-texture"></div>
+<svg class="grain" width="100%" height="100%">
+  <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">
+      <span class="mark">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
+      </span>
+      Autoscope
+    </div>
+    <div class="nav-links">
+      <a href="#probleme">Problème</a>
+      <a href="#fonctionnalites">Fonctionnalités</a>
+      <a href="#tech">Technologie</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <a class="nav-cta" href="https://autoscope-90bq.onrender.com/portal/mechanic/" target="_blank" rel="noopener">Voir la démo →</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#probleme">Problème</a>
+    <a href="#fonctionnalites">Fonctionnalités</a>
+    <a href="#tech">Technologie</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal in">
+      <div class="wordmark">AUTOSCOPE</div>
+      <span class="eyebrow"><span class="dot"></span>En ligne — backend actif</span>
+      <h1 class="headline">La santé de votre véhicule, <span class="grad">lue en temps réel.</span></h1>
+      <p class="lede">
+        Autoscope combine un dongle OBD-II et les capteurs du smartphone pour détecter les pannes
+        avant qu'elles n'arrivent, noter le comportement de conduite, et relier conducteurs,
+        garages et assureurs autour des mêmes données — conçu pour les marchés où l'entretien
+        automobile reste rare et réactif.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://autoscope-90bq.onrender.com/portal/mechanic/" target="_blank" rel="noopener">Essayer le portail mécanicien</a>
+        <a class="btn btn-ghost" href="https://autoscope-90bq.onrender.com/docs" target="_blank" rel="noopener">Documentation API</a>
+      </div>
+      <div class="proof-row">
+        <div class="proof-item"><b>53</b>tests automatisés</div>
+        <div class="proof-item"><b>P0301 → P0562</b>codes DTC reconnus</div>
+        <div class="proof-item"><b>105°C</b>seuil de surchauffe</div>
+        <div class="proof-item"><b>24/7</b>ingestion en continu</div>
+      </div>
+    </div>
+
+    <div class="mock reveal in">
+      <div class="mock-top">
+        <div class="mock-select">
+          <span class="mock-kicker">Diagnostic</span>
+          <span class="mock-vehicle">DEMO-VEHICLE-001 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </div>
+        <button class="mock-save" aria-label="Enregistrer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+
+      <div class="mock-stage">
+        <div class="mock-glow"></div>
+        <svg class="mock-car" viewBox="0 0 400 180" aria-hidden="true">
+          <defs>
+            <linearGradient id="carFill" x1="0" y1="0" x2="1" y2="1">
+              <stop class="stop-a" offset="0"/>
+              <stop class="stop-b" offset="1"/>
+            </linearGradient>
+            <linearGradient id="sweepGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop class="sweep-a" offset="0"/>
+              <stop class="sweep-b" offset="0.5"/>
+              <stop class="sweep-a" offset="1"/>
+            </linearGradient>
+            <clipPath id="carClip"><path d="M30,150 L30,136 Q31,121 46,115 L76,104 Q97,69 131,64 L176,64 Q196,64 206,79 L229,99 L256,107 Q300,111 321,119 Q340,125 340,139 L340,150 Z"/></clipPath>
+          </defs>
+          <path class="car-body" d="M30,150 L30,136 Q31,121 46,115 L76,104 Q97,69 131,64 L176,64 Q196,64 206,79 L229,99 L256,107 Q300,111 321,119 Q340,125 340,139 L340,150 Z" fill="url(#carFill)" stroke="url(#carFill)"/>
+          <g class="car-lines">
+            <path d="M84,104 L112,67" />
+            <path d="M160,64 L160,101" />
+            <path d="M206,79 L206,104" />
+          </g>
+          <g class="car-sweep" clip-path="url(#carClip)">
+            <rect x="-60" y="0" width="60" height="180" fill="url(#sweepGrad)"/>
+          </g>
+          <g class="car-wheel">
+            <circle class="wheel-outer" cx="100" cy="150" r="19"/>
+            <circle class="wheel-hub" cx="100" cy="150" r="7"/>
+          </g>
+          <g class="car-wheel">
+            <circle class="wheel-outer" cx="290" cy="150" r="19"/>
+            <circle class="wheel-hub" cx="290" cy="150" r="7"/>
+          </g>
+        </svg>
+
+        <div class="mock-pill pill-engine">
+          <span class="pill-dot ok"></span>92% · Analyse moteur
+        </div>
+        <div class="mock-pill pill-battery">
+          <span class="pill-dot ok"></span>Batterie — terminé
+        </div>
+        <div class="mock-pill pill-brake">
+          <span class="pill-dot warn"></span>Freinage — voir le rapport
+        </div>
+      </div>
+
+      <button class="mock-ai">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        Lancer l'analyse IA
+      </button>
+
+      <div class="mock-grid">
+        <div class="mock-metric">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3m10-10h-3M5 12H2m15.4-7.4-2.1 2.1M8.7 15.3l-2.1 2.1m0-10.8 2.1 2.1m8.6 8.6 2.1 2.1"/></svg>
+          <span class="m-label">Moteur</span>
+          <span class="m-status ok">Bon</span>
+        </div>
+        <div class="mock-metric">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M10 2V1h4v1"/></svg>
+          <span class="m-label">Batterie</span>
+          <span class="m-status ok">Bon</span>
+        </div>
+        <div class="mock-metric">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>
+          <span class="m-label">Température</span>
+          <span class="m-status ok">Bon</span>
+        </div>
+        <div class="mock-metric issue">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span class="m-label">Freinage</span>
+          <span class="m-status warn">Attention</span>
+        </div>
+        <div class="mock-metric">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.94 11A8.94 8.94 0 1 0 13 20.94"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/></svg>
+          <span class="m-label">GPS</span>
+          <span class="m-status ok">Actif</span>
+        </div>
+      </div>
+
+      <div class="mock-stats">
+        <div class="stat"><b>12.4V</b><span>Tension batterie</span></div>
+        <div class="stat"><b>42 300 km</b><span>Kilométrage estimé</span></div>
+        <div class="stat"><b>1</b><span>Code actif</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="probleme">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Le problème</span>
+      <h2 class="title">Les marchés émergents n'ont pas accès à la maintenance prédictive.</h2>
+      <p class="section-sub">Cinq frictions concrètes, et comment Autoscope les traite.</p>
+    </div>
+    <div class="ps-grid reveal">
+      <div class="ps-row">
+        <div class="ps-cell problem"><span class="ps-label">Problème</span>Maintenance rare et réactive — on répare après la panne, jamais avant.</div>
+        <div class="ps-cell solution"><span class="ps-label">Autoscope</span>Alertes prédictives et diagnostics en temps réel, dès que les premiers signes apparaissent.</div>
+      </div>
+      <div class="ps-row">
+        <div class="ps-cell problem"><span class="ps-label">Problème</span>Les outils de diagnostic professionnels restent chers et rares.</div>
+        <div class="ps-cell solution"><span class="ps-label">Autoscope</span>Un dongle OBD-II bas coût et les capteurs déjà présents dans le smartphone.</div>
+      </div>
+      <div class="ps-row">
+        <div class="ps-cell problem"><span class="ps-label">Problème</span>Infrastructure routière inégale, risques de conduite mal mesurés.</div>
+        <div class="ps-cell solution"><span class="ps-label">Autoscope</span>Analyse comportementale par capteurs : freinages, virages, vitesse, fatigue.</div>
+      </div>
+      <div class="ps-row">
+        <div class="ps-cell problem"><span class="ps-label">Problème</span>L'assurance automobile évalue le risque à l'aveugle, sans données réelles.</div>
+        <div class="ps-cell solution"><span class="ps-label">Autoscope</span>Scoring télématique anonymisé, exposé via une API dédiée aux assureurs.</div>
+      </div>
+      <div class="ps-row">
+        <div class="ps-cell problem"><span class="ps-label">Problème</span>Peu d'expertise technique disponible pour interpréter les symptômes.</div>
+        <div class="ps-cell solution"><span class="ps-label">Autoscope</span>Détection automatique des pannes, recommandations claires, support mécanicien à distance.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fonctionnalites">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Comment ça marche</span>
+      <h2 class="title">Trois surfaces, une seule source de données.</h2>
+      <p class="section-sub">Le conducteur, le garage et l'assureur consultent la même télémétrie, chacun avec sa propre vue.</p>
+    </div>
+    <div class="pillar-grid">
+      <div class="pillar reveal">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+        </div>
+        <h3>App mobile conducteur</h3>
+        <p>Tableau de bord en direct, alertes en langage clair, file hors-ligne qui se resynchronise dès que le réseau revient.</p>
+        <div class="pillar-foot">
+          <span class="status-pill beta">Bêta privée</span>
+        </div>
+      </div>
+      <div class="pillar accent reveal">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h3>Portail mécanicien</h3>
+        <p>Vue d'ensemble des véhicules suivis, historique, notes techniques et clôture d'entretien — accessible depuis n'importe quel navigateur.</p>
+        <div class="pillar-foot">
+          <span class="status-pill live">En ligne</span>
+          <a class="pillar-link" href="https://autoscope-90bq.onrender.com/portal/mechanic/" target="_blank" rel="noopener">Ouvrir →</a>
+        </div>
+      </div>
+      <div class="pillar teal reveal">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+        </div>
+        <h3>API partenaires</h3>
+        <p>Accès protégé par clé API pour assureurs et flottes : scoring d'usage anonymisé, intégrant comportement de conduite et risque prédictif.</p>
+        <div class="pillar-foot">
+          <span class="status-pill live">En ligne</span>
+          <a class="pillar-link" href="https://autoscope-90bq.onrender.com/docs" target="_blank" rel="noopener">Docs →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tech">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Sous le capot</span>
+      <h2 class="title">Un moteur de règles et un modèle prédictif, pas une boîte noire.</h2>
+      <p class="section-sub">Chaque alerte est traçable jusqu'à une règle de diagnostic ou une prédiction scorée — jamais une approximation.</p>
+    </div>
+    <div class="tech-strip reveal">
+      <div class="tech-stat"><b>Hybride</b><span>Règles DTC + modèle ML</span></div>
+      <div class="tech-stat"><b>Offline-first</b><span>File d'attente + sync auto</span></div>
+      <div class="tech-stat"><b>4 catégories</b><span>Diagnostic · comportement · prédictif · entretien</span></div>
+      <div class="tech-stat"><b>FastAPI</b><span>+ scikit-learn, React Native</span></div>
+      <div class="tech-detail">
+        <span class="tag">&gt;</span> freinage détecté si décélération ≤ <span class="tag">-5 m/s²</span><br>
+        <span class="tag">&gt;</span> surchauffe signalée si température liquide &gt; <span class="tag">105°C</span><br>
+        <span class="tag">&gt;</span> rappel d'entretien après <span class="tag">5000 km</span> ou <span class="tag">180 jours</span> sans service
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Contact</span>
+      <h2 class="title">Une question, un partenariat, une démo à organiser ?</h2>
+      <p class="section-sub">Écrivez ou appelez directement — pas de formulaire, pas d'attente.</p>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-card">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+        </div>
+        <div class="info">
+          <div class="label">Email</div>
+          <a class="value" href="mailto:massandiekone06@gmail.com">massandiekone06@gmail.com</a>
+        </div>
+        <button class="copy-btn" data-copy="massandiekone06@gmail.com" aria-label="Copier l'email">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="contact-card">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 22h.5a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-13a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h.5"/><path d="M6 6V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/><path d="M8 18h.01M12 18h.01M16 18h.01"/></svg>
+        </div>
+        <div class="info">
+          <div class="label">Mobile</div>
+          <a class="value" href="tel:+33702028684">07 02 02 86 84</a>
+        </div>
+        <button class="copy-btn" data-copy="07 02 02 86 84" aria-label="Copier le numéro mobile">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="contact-card">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="info">
+          <div class="label">Fixe</div>
+          <a class="value" href="tel:+33556515886">05 56 51 58 86</a>
+        </div>
+        <button class="copy-btn" data-copy="05 56 51 58 86" aria-label="Copier le numéro fixe">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <h2>Prêt à explorer la plateforme ?</h2>
+      <p>Le backend tourne en continu — ouvrez le portail mécanicien ou parcourez la documentation de l'API dès maintenant.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://autoscope-90bq.onrender.com/portal/mechanic/" target="_blank" rel="noopener">Portail mécanicien</a>
+        <a class="btn btn-ghost" href="https://autoscope-90bq.onrender.com/docs" target="_blank" rel="noopener">Documentation API</a>
+        <a class="btn btn-ghost" href="https://github.com/massandie/autoscope" target="_blank" rel="noopener">Code source</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Autoscope — plateforme de télématique automobile</span>
+    <div class="foot-links">
+      <a href="https://autoscope-90bq.onrender.com/portal/mechanic/" target="_blank" rel="noopener">Portail</a>
+      <a href="https://autoscope-90bq.onrender.com/docs" target="_blank" rel="noopener">API</a>
+      <a href="https://github.com/massandie/autoscope" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:massandiekone06@gmail.com">Email</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

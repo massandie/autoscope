@@ -30,3 +30,9 @@ app.mount("/portal/mechanic", StaticFiles(directory=os.path.join(_STATIC_DIR, "m
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+# Site vitrine public (dossier website/ à la racine du dépôt). Monté en dernier et après toutes
+# les routes ci-dessus : un mount à "/" intercepterait sinon toute route déclarée après lui.
+_SITE_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "website")
+app.mount("/", StaticFiles(directory=_SITE_DIR, html=True), name="site")
