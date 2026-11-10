@@ -24,3 +24,7 @@ Thumbs.db
 # Env/secrets
 *.env
 .env.*
+
+# Local-only generated documents (contain live credentials/URLs for this deployment)
+Autoscope_Acces.pdf
+Autoscope_Resume.pdf
