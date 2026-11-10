@@ -1,0 +1,26 @@
+# Python / backend
+backend/.venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.db
+backend/app/ml/model.joblib
+backend/alembic.ini.bak
+
+# Node / mobile
+mobile/node_modules/
+mobile/.expo/
+mobile/.expo-shared/
+mobile/android/
+mobile/ios/
+mobile/web-build/
+mobile/npm-debug.*
+mobile/.metro-health-check*
+
+# Editors / OS
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Env/secrets
+*.env
+.env.*

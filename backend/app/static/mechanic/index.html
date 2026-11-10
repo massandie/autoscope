@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Autoscope — Portail Mécanicien</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #2563eb;
+    --brand-dark: #1d4ed8;
+    --brand-light: #eff6ff;
+    --accent: #7c3aed;
+    --accent-light: #f5f3ff;
+    --teal: #0d9488;
+    --teal-light: #f0fdfa;
+    --ink: #0f172a;
+    --slate-600: #475569;
+    --slate-500: #64748b;
+    --slate-300: #cbd5e1;
+    --slate-200: #e2e8f0;
+    --slate-100: #f1f5f9;
+    --slate-50: #f8fafc;
+    --critical: #dc2626;
+    --critical-bg: #fef2f2;
+    --warning: #d97706;
+    --warning-bg: #fffbeb;
+    --info: #2563eb;
+    --info-bg: #eff6ff;
+    --success: #16a34a;
+    --success-bg: #f0fdf4;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 12px 40px rgba(15, 23, 42, 0.12);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--slate-50);
+    color: var(--ink);
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 { font-weight: 700; letter-spacing: -0.01em; }
+  .muted { color: var(--slate-500); font-size: 13px; }
+
+  /* ---------- Login screen ---------- */
+  #login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(124,58,237,0.14), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(37,99,235,0.12), transparent 45%),
+      radial-gradient(circle at 50% 100%, rgba(13,148,136,0.08), transparent 50%),
+      var(--slate-50);
+    padding: 24px;
+  }
+  .login-card {
+    width: 100%;
+    max-width: 380px;
+    background: #fff;
+    padding: 36px 32px 32px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--slate-200);
+  }
+  .brand-mark {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--brand));
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 18px;
+    box-shadow: 0 6px 16px rgba(124,58,237,0.32);
+  }
+  .login-card h1 { font-size: 21px; margin: 0 0 6px; }
+  .login-card p.subtitle { color: var(--slate-500); font-size: 14px; margin: 0 0 26px; line-height: 1.5; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12.5px; font-weight: 600; color: var(--slate-600); margin-bottom: 6px; }
+  input, textarea {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1.5px solid var(--slate-200);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 14px;
+    background: #fff;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  input::placeholder, textarea::placeholder { color: #94a3b8; }
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+  }
+  .error-box {
+    display: none;
+    background: var(--critical-bg);
+    color: var(--critical);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 14px;
+  }
+
+  button {
+    font-family: inherit;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.15s ease, transform 0.05s ease;
+  }
+  button:active { transform: scale(0.98); }
+  .btn-primary {
+    background: var(--brand);
+    color: #fff;
+    padding: 11px 18px;
+    width: 100%;
+  }
+  .btn-primary:hover { background: var(--brand-dark); }
+  .btn-secondary {
+    background: var(--slate-100);
+    color: var(--ink);
+    padding: 9px 14px;
+    border: 1px solid var(--slate-200);
+  }
+  .btn-secondary:hover { background: var(--slate-200); }
+  .btn-outline {
+    background: #fff;
+    color: var(--teal);
+    padding: 9px 14px;
+    border: 1.5px solid var(--teal);
+  }
+  .btn-outline:hover { background: var(--teal-light); }
+  button:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  /* ---------- App shell ---------- */
+  #app-screen { display: none; min-height: 100vh; }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    background: #fff;
+    border-bottom: 1px solid var(--slate-200);
+    border-top: 3px solid transparent;
+    border-image: linear-gradient(90deg, var(--accent), var(--brand), var(--teal)) 1;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .topbar-brand { display: flex; align-items: center; gap: 10px; }
+  .topbar-brand .brand-mark { width: 34px; height: 34px; margin: 0; border-radius: 9px; }
+  .topbar-brand .titles h1 { font-size: 16px; margin: 0; line-height: 1.2; }
+  .topbar-brand .titles span { font-size: 12px; color: var(--slate-500); }
+  .who-block { display: flex; align-items: center; gap: 12px; }
+  .avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--brand-light); color: var(--brand);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+  }
+  .who-name { font-size: 13.5px; font-weight: 600; }
+
+  .layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 28px 60px;
+  }
+  .vehicles-panel { flex: 0 0 340px; }
+  .panel-heading {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .panel-heading h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate-500); margin: 0; }
+  .count-pill {
+    background: var(--slate-100); color: var(--slate-600);
+    font-size: 11.5px; font-weight: 700; padding: 2px 9px; border-radius: 999px;
+  }
+  .search-box { position: relative; margin-bottom: 14px; }
+  .search-box input { padding-left: 34px; }
+  .search-box svg { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--slate-500); }
+
+  .vehicle-card {
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: 14px 16px 14px 14px;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    border-left: 4px solid var(--slate-300);
+    transition: border-color 0.12s ease, box-shadow 0.12s ease;
+  }
+  .vehicle-card.status-critical { border-left-color: var(--critical); }
+  .vehicle-card.status-warning { border-left-color: var(--warning); }
+  .vehicle-card.status-ok { border-left-color: var(--teal); }
+  .vehicle-card:hover { box-shadow: var(--shadow-md); }
+  .vehicle-card.selected { border-color: var(--brand); border-left-color: var(--brand); box-shadow: 0 0 0 3px rgba(37,99,235,0.10); }
+  .vehicle-card h3 { margin: 0 0 8px; font-size: 14.5px; letter-spacing: 0; }
+  .vehicle-card .row { display: flex; align-items: center; justify-content: space-between; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; padding: 3px 9px; border-radius: 999px; font-weight: 700;
+  }
+  .badge.critical { background: var(--critical-bg); color: var(--critical); }
+  .badge.warning { background: var(--warning-bg); color: var(--warning); }
+  .badge.info { background: var(--info-bg); color: var(--info); }
+  .badge.none { background: var(--teal-light); color: var(--teal); }
+
+  .score-chip { font-size: 12.5px; font-weight: 700; color: var(--slate-600); }
+
+  .empty-state {
+    background: #fff;
+    border: 1.5px dashed var(--slate-300);
+    border-radius: var(--radius-lg);
+    padding: 60px 30px;
+    text-align: center;
+    color: var(--slate-500);
+  }
+  .empty-state svg { color: var(--slate-300); margin-bottom: 14px; }
+  .empty-state p { margin: 0; font-size: 14px; }
+
+  .detail-panel { flex: 1; min-width: 0; }
+  .detail-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--slate-200);
+    overflow: hidden;
+  }
+  .detail-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--slate-200);
+    background: linear-gradient(135deg, var(--brand-light), var(--accent-light));
+  }
+  .detail-header h2 { font-size: 19px; margin: 0; background: linear-gradient(90deg, var(--brand-dark), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .detail-body { padding: 24px; }
+  .section { margin-bottom: 28px; }
+  .section:last-child { margin-bottom: 0; }
+  .section-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--slate-500); margin: 0 0 14px;
+    padding-left: 10px;
+    border-left: 3px solid var(--brand);
+  }
+  .section:nth-of-type(2) .section-title { border-left-color: var(--accent); }
+  .section:nth-of-type(3) .section-title { border-left-color: var(--teal); }
+
+  .alert-row {
+    display: flex; gap: 12px;
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    background: var(--slate-50);
+    border-left: 4px solid var(--slate-300);
+  }
+  .alert-row.critical { border-left-color: var(--critical); background: var(--critical-bg); }
+  .alert-row.warning { border-left-color: var(--warning); background: var(--warning-bg); }
+  .alert-row.info { border-left-color: var(--info); background: var(--info-bg); }
+  .alert-row .icon { flex-shrink: 0; margin-top: 1px; }
+  .alert-row strong { font-size: 14px; display: block; margin-bottom: 2px; }
+  .alert-row .muted { font-size: 12.5px; }
+
+  .note-card {
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+  .note-card .note-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .note-card .note-avatar {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent-light); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10.5px; font-weight: 700; flex-shrink: 0;
+  }
+  .note-card .note-name { font-weight: 700; font-size: 13px; }
+  .note-card .note-text { font-size: 13.5px; line-height: 1.5; color: var(--ink); }
+  .note-card .note-parts { margin-top: 6px; font-size: 12px; }
+
+  .form-grid { display: grid; gap: 10px; }
+  .form-actions { display: flex; gap: 10px; margin-top: 4px; }
+
+  .skeleton {
+    background: linear-gradient(90deg, var(--slate-100) 25%, var(--slate-200) 37%, var(--slate-100) 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.4s ease infinite;
+    border-radius: var(--radius-sm);
+  }
+  @keyframes shimmer { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--ink); color: #fff;
+    padding: 11px 20px; border-radius: 999px;
+    font-size: 13.5px; font-weight: 600;
+    box-shadow: var(--shadow-lg);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 100;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 860px) {
+    .layout { flex-direction: column; }
+    .vehicles-panel { flex: 1 1 auto; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+  <div id="login-screen">
+    <div class="login-card">
+      <div class="brand-mark">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
+      </div>
+      <h1>Portail Mécanicien</h1>
+      <p class="subtitle">Connectez-vous pour accéder aux diagnostics et aux données clients Autoscope.</p>
+      <div id="login-error" class="error-box"></div>
+      <div class="field">
+        <label for="login-username">Identifiant</label>
+        <input id="login-username" placeholder="mecanicien" autocomplete="username" />
+      </div>
+      <div class="field">
+        <label for="login-password">Mot de passe</label>
+        <input id="login-password" placeholder="••••••••" type="password" autocomplete="current-password" />
+      </div>
+      <button class="btn-primary" id="login-btn" onclick="login()">Se connecter</button>
+    </div>
+  </div>
+
+  <div id="app-screen">
+    <div class="topbar">
+      <div class="topbar-brand">
+        <div class="brand-mark">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
+        </div>
+        <div class="titles">
+          <h1>Autoscope</h1>
+          <span>Portail Mécanicien</span>
+        </div>
+      </div>
+      <div class="who-block">
+        <div class="avatar" id="who-avatar">—</div>
+        <span class="who-name" id="who-name"></span>
+        <button class="btn-secondary" onclick="logout()">Déconnexion</button>
+      </div>
+    </div>
+
+    <div class="layout">
+      <div class="vehicles-panel">
+        <div class="panel-heading">
+          <h2>Véhicules suivis</h2>
+          <span class="count-pill" id="vehicle-count">0</span>
+        </div>
+        <div class="search-box">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input id="vehicle-search" placeholder="Rechercher par immatriculation..." oninput="renderVehicleList()" />
+        </div>
+        <div id="vehicles">
+          <div class="skeleton" style="height:76px;margin-bottom:10px"></div>
+          <div class="skeleton" style="height:76px;margin-bottom:10px"></div>
+          <div class="skeleton" style="height:76px"></div>
+        </div>
+      </div>
+
+      <div class="detail-panel" id="detail">
+        <div class="empty-state">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
+          <p>Sélectionnez un véhicule dans la liste pour afficher ses alertes, son historique et ses notes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+const API = window.location.origin;
+let selectedVehicleId = null;
+let currentVehicles = [];
+let authToken = localStorage.getItem('autoscope_mechanic_token');
+let authName = localStorage.getItem('autoscope_mechanic_name');
+
+const SEVERITY_ICON = {
+  critical: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+  warning: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+  info: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+};
+
+function escapeHtml(str) {
+  return String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function initials(name) {
+  return (name || '?').trim().split(/\s+/).map(p => p[0]).slice(0, 2).join('').toUpperCase();
+}
+
+let toastTimer = null;
+function showToast(message) {
+  const el = document.getElementById('toast');
+  el.textContent = message;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
+}
+
+function authHeaders() {
+  return { 'Authorization': `Bearer ${authToken}` };
+}
+
+async function login() {
+  const username = document.getElementById('login-username').value;
+  const password = document.getElementById('login-password').value;
+  const errorEl = document.getElementById('login-error');
+  const btn = document.getElementById('login-btn');
+  errorEl.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = 'Connexion...';
+
+  try {
+    const res = await fetch(`${API}/mechanic/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (!res.ok) {
+      errorEl.textContent = 'Identifiant ou mot de passe incorrect.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    const data = await res.json();
+    authToken = data.access_token;
+    authName = data.full_name;
+    localStorage.setItem('autoscope_mechanic_token', authToken);
+    localStorage.setItem('autoscope_mechanic_name', authName);
+    showApp();
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Se connecter';
+  }
+}
+
+function logout() {
+  authToken = null;
+  localStorage.removeItem('autoscope_mechanic_token');
+  localStorage.removeItem('autoscope_mechanic_name');
+  document.getElementById('app-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+}
+
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app-screen').style.display = 'block';
+  document.getElementById('who-name').textContent = authName || '';
+  document.getElementById('who-avatar').textContent = initials(authName);
+  loadVehicles();
+}
+
+async function authedFetch(url, options = {}) {
+  const res = await fetch(url, { ...options, headers: { ...(options.headers || {}), ...authHeaders() } });
+  if (res.status === 401) {
+    logout();
+    throw new Error('Session expirée');
+  }
+  return res;
+}
+
+async function loadVehicles() {
+  const res = await authedFetch(`${API}/mechanic/vehicles`);
+  currentVehicles = await res.json();
+  renderVehicleList();
+}
+
+function renderVehicleList() {
+  const el = document.getElementById('vehicles');
+  const query = (document.getElementById('vehicle-search')?.value || '').trim().toLowerCase();
+  const filtered = query ? currentVehicles.filter(v => v.vehicle_id.toLowerCase().includes(query)) : currentVehicles;
+
+  document.getElementById('vehicle-count').textContent = currentVehicles.length;
+
+  if (currentVehicles.length === 0) {
+    el.innerHTML = '<p class="muted">Aucun véhicule suivi pour le moment.</p>';
+    return;
+  }
+  if (filtered.length === 0) {
+    el.innerHTML = '<p class="muted">Aucun résultat pour cette recherche.</p>';
+    return;
+  }
+
+  el.innerHTML = filtered.map(v => {
+    const statusClass = v.critical_alerts > 0 ? 'status-critical' : v.open_alerts > 0 ? 'status-warning' : 'status-ok';
+    const badge = v.critical_alerts > 0
+      ? `<span class="badge critical">${SEVERITY_ICON.critical}${v.open_alerts} alerte(s)</span>`
+      : v.open_alerts > 0
+        ? `<span class="badge warning">${SEVERITY_ICON.warning}${v.open_alerts} alerte(s)</span>`
+        : `<span class="badge none">À jour</span>`;
+    return `
+    <div class="vehicle-card ${statusClass} ${v.vehicle_id === selectedVehicleId ? 'selected' : ''}" onclick="selectVehicle('${escapeHtml(v.vehicle_id)}')">
+      <h3>${escapeHtml(v.vehicle_id)}</h3>
+      <div class="row">
+        ${badge}
+        <span class="score-chip">${v.latest_driving_score ?? '—'}<span class="muted">/100</span></span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function selectVehicle(vehicleId) {
+  selectedVehicleId = vehicleId;
+  renderVehicleList();
+  document.getElementById('detail').innerHTML = `<div class="skeleton" style="height:320px"></div>`;
+  await loadDetail(vehicleId);
+}
+
+async function loadDetail(vehicleId) {
+  const [alertsRes, notesRes] = await Promise.all([
+    authedFetch(`${API}/mechanic/vehicles/${vehicleId}/alerts`),
+    authedFetch(`${API}/mechanic/vehicles/${vehicleId}/notes`),
+  ]);
+  const alerts = await alertsRes.json();
+  const notes = await notesRes.json();
+
+  document.getElementById('detail').innerHTML = `
+    <div class="detail-card">
+      <div class="detail-header">
+        <h2>${escapeHtml(vehicleId)}</h2>
+        <button class="btn-outline" onclick="markServiceComplete('${escapeHtml(vehicleId)}')">✓ Marquer l'entretien effectué</button>
+      </div>
+      <div class="detail-body">
+        <div class="section">
+          <p class="section-title">Alertes actives</p>
+          ${alerts.length === 0 ? '<p class="muted">Aucune alerte en cours — véhicule sain.</p>' : alerts.map(a => `
+            <div class="alert-row ${a.severity}">
+              <span class="icon">${SEVERITY_ICON[a.severity] || SEVERITY_ICON.info}</span>
+              <div>
+                <strong>${escapeHtml(a.message)}</strong>
+                ${a.recommended_action ? `<div class="muted">${escapeHtml(a.recommended_action)}</div>` : ''}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="section">
+          <p class="section-title">Notes mécanicien</p>
+          <div id="notes-list">
+            ${notes.length === 0 ? '<p class="muted">Aucune note pour ce véhicule.</p>' : notes.map(n => `
+              <div class="note-card">
+                <div class="note-head">
+                  <span class="note-avatar">${initials(n.mechanic_name)}</span>
+                  <span class="note-name">${escapeHtml(n.mechanic_name)}</span>
+                </div>
+                <div class="note-text">${escapeHtml(n.note)}</div>
+                ${n.recommended_parts.length ? `<div class="muted note-parts">🔧 Pièces : ${n.recommended_parts.map(escapeHtml).join(', ')}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="section">
+          <p class="section-title">Ajouter une note</p>
+          <div class="form-grid">
+            <input id="note-mechanic" placeholder="Votre nom" />
+            <textarea id="note-text" placeholder="Observation / recommandation" rows="3"></textarea>
+            <input id="note-parts" placeholder="Pièces recommandées (séparées par des virgules)" />
+            <div class="form-actions">
+              <button class="btn-primary" id="note-submit-btn" style="width:auto" onclick="submitNote('${escapeHtml(vehicleId)}')">Enregistrer la note</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+async function submitNote(vehicleId) {
+  const mechanic_name = document.getElementById('note-mechanic').value || authName || 'Mécanicien';
+  const note = document.getElementById('note-text').value;
+  const parts = document.getElementById('note-parts').value;
+  if (!note.trim()) return;
+
+  const btn = document.getElementById('note-submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Enregistrement...';
+
+  try {
+    await authedFetch(`${API}/mechanic/vehicles/${vehicleId}/notes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        mechanic_name,
+        note,
+        recommended_parts: parts ? parts.split(',').map(s => s.trim()).filter(Boolean) : [],
+      }),
+    });
+    await loadDetail(vehicleId);
+    showToast('Note enregistrée');
+  } finally {
+    if (btn.isConnected) { btn.disabled = false; btn.textContent = 'Enregistrer la note'; }
+  }
+}
+
+async function markServiceComplete(vehicleId) {
+  await authedFetch(`${API}/mechanic/vehicles/${vehicleId}/service-complete`, { method: 'POST' });
+  await loadVehicles();
+  await loadDetail(vehicleId);
+  showToast('Entretien marqué comme effectué');
+}
+
+document.getElementById('login-password').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') login();
+});
+
+if (authToken) {
+  showApp();
+}
+</script>
+</body>
+</html>
