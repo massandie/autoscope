@@ -13,6 +13,7 @@
       }
     },
     "android": {
+      "package": "com.massandie.autoscope",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
@@ -23,14 +24,16 @@
       "permissions": [
         "BLUETOOTH_SCAN",
         "BLUETOOTH_CONNECT",
-        "ACCESS_FINE_LOCATION"
+        "ACCESS_FINE_LOCATION",
+        "android.permission.BLUETOOTH",
+        "android.permission.BLUETOOTH_ADMIN",
+        "android.permission.BLUETOOTH_CONNECT"
       ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-background-task",
       [
         "react-native-ble-plx",
         {
@@ -42,6 +45,12 @@
         }
       ],
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "72201aa0-6b4e-4a28-836d-98637a6caaa1"
+      }
+    },
+    "owner": "massandie"
   }
 }

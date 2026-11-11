@@ -58,17 +58,28 @@ Deux implémentations de l'interface `OBDConnector` (`src/services/obd.ts`) :
      à bas coût, mais varient d'un fabricant à l'autre).
   3. Remplacer `new MockOBDConnector()` par `new BleOBDConnector()` dans `DashboardScreen.tsx`.
 
-## Synchronisation en arrière-plan
+## Synchronisation en arrière-plan — retirée
 
-`src/services/backgroundSync.ts` enregistre une tâche OS (`expo-background-task` +
-`expo-task-manager`) qui vide la file hors-ligne même quand l'app est fermée/arrière-plan, en plus
-de la synchronisation en premier plan déjà active pendant qu'on conduit.
+Une tâche OS (`expo-background-task` + `expo-task-manager`) avait été écrite pour vider la file
+hors-ligne même app fermée. **Retirée après un vrai crash en build de production** : le premier
+APK compilé via EAS plantait au tout premier lancement, avant même d'exécuter le moindre code JS
+(`FATAL EXCEPTION` sur `androidx.startup.InitializationProvider`, cause
+`NoSuchMethodException: androidx.work.impl.WorkDatabase_Impl.<init>`) — un conflit de version
+WorkManager propre à `expo-background-task` sur ce SDK Expo 58 très récent. Comme Expo Go ignore
+ce module silencieusement, le bug n'était visible qu'en vrai build natif, jamais pendant les tests
+en développement. La synchronisation en premier plan (pendant que l'app est ouverte, à chaque trajet)
+reste pleinement fonctionnelle et suffisante pour l'usage actuel.
 
-- La fonction exécutée par la tâche (`runBackgroundSync`) est testée unitairement et fonctionne
-  (`src/services/__tests__/backgroundSync.test.ts`).
-- **L'enregistrement OS réel n'est pas utilisable dans Expo Go** (message d'avertissement silencieux
-  en console, l'app continue de fonctionner normalement) — comme le BLE, ça nécessite un dev client
-  natif. La cadence réelle en production est ensuite décidée par l'OS (Android/iOS), pas par l'app.
+## Distribution (APK installable)
+
+```bash
+npx eas-cli@latest build --platform android --profile preview
+```
+
+Compile dans le cloud Expo (compte gratuit requis, `npx eas-cli login`) et donne un lien de
+téléchargement direct — installable sur n'importe quel Android sans Play Store. Le profil
+`preview` (`eas.json`) pointe l'app vers le backend en ligne (`autoscope-90bq.onrender.com`), pas
+vers une IP locale.
 
 ## Tests
 
@@ -76,12 +87,12 @@ de la synchronisation en premier plan déjà active pendant qu'on conduit.
 npm test
 ```
 
-33 tests sur 6 suites : scoring de conduite, détection de fatigue (horloge injectable), résolution
+31 tests sur 5 suites : scoring de conduite, détection de fatigue (horloge injectable), résolution
 de limitation de vitesse réelle (parsing + cache, Overpass mocké), connecteur OBD mock, parsing du
-protocole ELM327 (RPM/température/tension/DTC), tâche de synchronisation en arrière-plan, et un test
-d'intégration réel qui démarre le backend (`uvicorn app.main:app --port 8010`) et vérifie que la
-file hors-ligne envoie bien les données et reçoit les alertes générées par le moteur de règles.
-Lancer le backend sur le port 8010 avant `npm test`, sinon ce dernier test est sauté silencieusement.
+protocole ELM327 (RPM/température/tension/DTC), et un test d'intégration réel qui démarre le backend
+(`uvicorn app.main:app --port 8010`) et vérifie que la file hors-ligne envoie bien les données et
+reçoit les alertes générées par le moteur de règles. Lancer le backend sur le port 8010 avant
+`npm test`, sinon ce dernier test est sauté silencieusement.
 
 Un test de rendu complet de `DashboardScreen` (presser le bouton, voir l'UI réagir en mémoire) n'a
 pas pu être mis en place dans cet environnement : `@testing-library/react-native` 14.x attend le
@@ -98,6 +109,5 @@ SDK 58 ici. Le rendu réel a en revanche été confirmé à la main sur un tél�
 - `src/services/elm327.ts` — parsing protocole ELM327/SAE J1979 (pur, testé)
 - `src/services/driving.ts` — détection des événements de conduite (freinage, virages, vitesse)
 - `src/services/offlineQueue.ts` — file d'attente locale + synchronisation réseau (premier plan)
-- `src/services/backgroundSync.ts` — synchronisation OS en arrière-plan
 - `src/services/api.ts` — client HTTP vers le backend
 - `src/screens/DashboardScreen.tsx` — écran principal
