@@ -147,7 +147,7 @@ export default function DashboardScreen() {
         </View>
       </LinearGradient>
 
-      <View style={styles.content}>
+      <View style={[styles.content, { paddingBottom: insets.bottom + spacing.sm }]}>
         <TouchableOpacity
           activeOpacity={0.85}
           style={[styles.connectButton, isConnected ? styles.connectButtonDanger : styles.connectButtonPrimary]}
@@ -189,6 +189,7 @@ export default function DashboardScreen() {
         </View>
 
         <FlatList
+          style={styles.alertsList}
           data={alerts}
           keyExtractor={(item, index) => `${item.id}-${index}`}
           renderItem={({ item }) => <AlertCard alert={item} />}
@@ -317,6 +318,7 @@ const styles = StyleSheet.create({
   countBadgeCritical: { backgroundColor: colors.criticalBg },
   countBadgeText: { fontSize: 12, fontWeight: '700', color: colors.textSecondary },
 
+  alertsList: { flex: 1 },
   emptyContainer: { flexGrow: 1, justifyContent: 'center' },
   empty: { alignItems: 'center', paddingVertical: spacing.xxl, gap: 4 },
   emptyText: { color: colors.textSecondary, fontSize: 14.5, fontWeight: '600', marginTop: spacing.sm },
